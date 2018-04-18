@@ -1,0 +1,64 @@
+<div>
+  <input type="text" placeholder="Filter by name">
+</div>
+
+<table>
+  <thead>
+  <tr>
+    <th>First</th>
+    <th>Last</th>
+    <th>E-mail</th>
+    <th>Created</th>
+    <th>Updated</th>
+  </tr>
+  </thead>
+  <tbody *ngIf="users.length === 0">
+    <tr>
+      <td colspan="5">No users found</td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="users.length > 0">
+    <tr *ngFor="let user of users">
+      <td>{{ user.FirstName }}</td>
+      <td>{{ user.LastName }}</td>
+      <td>{{ user.Email }}</td>
+      <td>{{ user.Created | date }}</td>
+      <td>{{ user.Modified | date }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Async</h3>
+
+<table>
+  <thead>
+  <tr>
+    <th>First</th>
+    <th>Last</th>
+    <th>E-mail</th>
+    <th>Created</th>
+    <th>Updated</th>
+  </tr>
+  </thead>
+  <tbody *ngIf="loading$ | async">
+  <tr>
+    <td colspan="5">Loading users ...</td>
+  </tr>
+  </tbody>
+  <ng-template ngIf="users$ | async as users">
+    <tbody *ngIf="users.length === 0">
+    <tr>
+      <td colspan="5">No users found</td>
+    </tr>
+    </tbody>
+    <tbody *ngIf="users.length > 0">
+    <tr *ngFor="let user of users">
+      <td>{{ user.FirstName }}</td>
+      <td>{{ user.LastName }}</td>
+      <td>{{ user.Email }}</td>
+      <td>{{ user.Created | date }}</td>
+      <td>{{ user.Modified | date }}</td>
+    </tr>
+    </tbody>
+  </ng-template>
+</table>
