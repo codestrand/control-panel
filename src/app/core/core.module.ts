@@ -3,6 +3,7 @@ import {HttpClientModule} from '@angular/common/http';
 
 // Services
 import {UsersService} from './services/users.service';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   imports: [
@@ -11,5 +12,7 @@ import {UsersService} from './services/users.service';
   providers: [
     UsersService,
   ],
+  declarations: [FilterPipe],
+  exports: [FilterPipe],
 })
 export class CoreModule { }

@@ -1,0 +1,8 @@
+<h1>Edit user</h1>
+<form *ngIf="user" (submit)="save(userForm.value)" #userForm="ngForm">
+  <input type="text" name="FirstName" placeholder="First Name" [ngModel]="user.FirstName" required>
+  <input type="text" name="LastName" placeholder="Last Name" [ngModel]="user.LastName" required>
+  <input type="email" name="Email" placeholder="Email" [ngModel]="user.Email" required>
+  <button [disabled]="!userForm.valid">Save</button>
+</form>
+

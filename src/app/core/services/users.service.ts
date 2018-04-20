@@ -16,7 +16,15 @@ export class UsersService {
   ) { }
 
   public getUsers(): Observable<User[]> {
-    return this.http.get<User[]>('/assets/data/users.json');
+    return this.http.get<User[]>('http://localhost:3000/users');
+  }
+
+  public getUser(id: string): Observable<User> {
+    return this.http.get<User>('http://localhost:3000/users/' + id);
+  }
+
+  public updateUser(id: string, changes: Partial<User>) {
+    return this.http.patch('http://localhost:3000/users/' + id, changes);
   }
 
 }

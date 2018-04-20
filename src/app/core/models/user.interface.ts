@@ -1,8 +1,8 @@
 export interface User {
-  Id: string;
+  id?: string;
   FirstName: string;
   LastName: string;
   Email: string;
-  Created: Date;
-  Modified: Date;
+  Created?: Date;
+  Modified?: Date;
 }
