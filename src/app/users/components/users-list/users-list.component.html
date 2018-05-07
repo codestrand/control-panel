@@ -1,45 +1,20 @@
 <div>
   <input type="text" placeholder="Filter by name" [(ngModel)]="target">
+  <pre>current: {{ target | json }}</pre>
 </div>
+<select [ngModel]="limit$ | async" (ngModelChange)="limit$.next($event)">
+  <option *ngFor="let option of limitOptions" [ngValue]="option">{{ option }}</option>
+</select>
 
-<table>
-  <thead>
-  <tr>
-    <th><input type="checkbox"></th>
-    <th>Actions</th>
-    <th>First</th>
-    <th>Last</th>
-    <th>E-mail</th>
-    <th>Created</th>
-    <th>Updated</th>
-  </tr>
-  </thead>
-  <tbody *ngIf="users.length === 0">
-  <tr>
-    <td colspan="7">No users found</td>
-  </tr>
-  </tbody>
-  <tbody *ngIf="(users | filter: {query: target}).length === 0">
-  <tr>
-    <td colspan="7">No users matching <strong>{{ target }}</strong></td>
-  </tr>
-  </tbody>
-  <tbody *ngIf="users.length > 0">
-  <tr *ngFor="let user of users | filter: {query: target}">
-    <td><input type="checkbox"></td>
-    <td><button [routerLink]="user.id">View user</button> <a [routerLink]="[user.id, 'edit']">Edit</a></td>
-    <td>{{ user.FirstName }}</td>
-    <td>{{ user.LastName }}</td>
-    <td>{{ user.Email }}</td>
-    <td>{{ user.Created | date }}</td>
-    <td>{{ user.Modified | date }}</td>
-  </tr>
-  </tbody>
-</table>
+<select [ngModel]="page$ |async" (ngModelChange)="page$.next($event)">
+  <option *ngFor="let option of pageOptions" [ngValue]="option"> {{ option }}</option>
+</select>
 
 <h3>Async</h3>
+<pre>limit stream: {{ limit$ | async | json }}</pre>
+<pre>page stream: {{ page$ | async |  json }}</pre>
 
-<table>
+<table *ngIf="users$ | async as users">
   <thead>
   <tr>
     <th><input type="checkbox"></th>
@@ -51,12 +26,16 @@
     <th>Updated</th>
   </tr>
   </thead>
+  <tbody *ngIf="target">
+  <tr>
+   <td>Displaying {{ (users | filter: {query: target}) .length  }} out of {{ users.length }}, filtering by <b>{{ target }}</b></td>
+  </tr>
+  </tbody>
   <tbody *ngIf="loading$ | async">
   <tr>
     <td colspan="5">Loading users ...</td>
   </tr>
   </tbody>
-  <ng-template ngIf="users$ | async as users">
     <tbody *ngIf="users.length === 0">
     <tr>
       <td colspan="7">No users found</td>
@@ -78,5 +57,4 @@
       <td>{{ user.Modified | date }}</td>
     </tr>
     </tbody>
-  </ng-template>
 </table>

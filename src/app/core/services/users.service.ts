@@ -15,8 +15,13 @@ export class UsersService {
     private http: HttpClient
   ) { }
 
-  public getUsers(): Observable<User[]> {
-    return this.http.get<User[]>('http://localhost:3000/users');
+  public getUsers(page = 1, limit = 1): Observable<User[]> {
+    return this.http.get<User[]>('http://localhost:3000/users', {
+      params: {
+        _page: page.toString(10),
+        _limit: limit.toString(10),
+      }
+    });
   }
 
   public getUser(id: string): Observable<User> {
